@@ -127,14 +127,14 @@ docker compose down
 
 Start:
 ```bash
-cd ~/nms
+cd ~/5g-sib8-alert/nms
 ./start-nms.sh
 ```
 The web interface is accessible at http://localhost:3000/.
 
 Stop:
 ```bash
-cd ~/nms
+cd ~/5g-sib8-alert/nms
 ./stop-nms.sh
 ```
 **NOTE:** You should configure the parameters before running the gNB, except for sib8 parameters, as they can be modified at runtime.
