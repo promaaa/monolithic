@@ -1,0 +1,32 @@
+services:
+  backend:
+    image: 5gsecurity/nms-backend:latest
+    container_name: nms-backend
+    ports:
+      - "3001:3001"
+    volumes:
+      - ${HOME}/openairinterface5g/sib8.conf:/config/sib8.conf
+      - ${HOME}/openairinterface5g/targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf:/config/gnb.conf
+      - ${HOME}/oai-cn5g/conf/config.yaml:/config/cn.conf
+    environment:
+      - PLMN_CONFIG_PATH=/config/gnb.conf
+      - SIB8_CONFIG_PATH=/config/sib8.conf
+      - CN_CONFIG_PATH=/config/cn.conf
+      - DB_HOST=mysql
+      - DB_USER=test
+      - DB_PASSWORD=test
+      - DB_NAME=oai_db
+    networks:
+      - oai-cn5g-public-net
+
+  frontend:
+    image: 5gsecurity/nms-frontend:latest
+    container_name: nms-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+networks:
+  oai-cn5g-public-net:
+    external: true
