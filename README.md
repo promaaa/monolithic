@@ -7,15 +7,15 @@ The implementation is based on OpenAirInterface commit: `102965a669b9444857c2784
 ## Overview
 
 The provided patch implements:
-- Construction of SIB8 warning messages in the RRC layer
-- Support for segmented SIB8 transmission using multiple System Information messages
-- Support for multiple data coding scheme (GSM 7-bit and UCS2)
-- Support for dynamic changes of SIB8 parameters.
+- Construction of SIB8 warning messages in the RRC layer,
+- Support for segmented SIB8 transmission using multiple System Information messages.
+- Support for multiple data coding scheme (GSM 7-bit and UCS2).
+- Support for runtime updates of SIB8 parameters.
 
 The NMS allows users to:
-- Modify SIB8 warning message parameters
-- Configure key gNB parameters (e.g. PLMN, cell identity..)
-- Manage basic subscriber data in the core network
+- Modify SIB8 warning message parameters, including the transmission mode.
+- Configure key gNB parameters (e.g. PLMN, cell identity..).
+- Manage basic subscriber data in the core network.
 
 ## Tutorial
 
@@ -23,6 +23,12 @@ The NMS allows users to:
 > - This setup was tested on **Ubuntu 24.04** with an **USRP B210 SDR**.
 > - The commands below are a **tested version** of the steps described in the official OAI documentation: [OAI NR SA Tutorial for COTS UE](https://gitlab.eurecom.fr/oai/openairinterface5g/-/blob/develop/doc/NR_SA_Tutorial_COTS_UE.md).
 > - Users are encouraged to explore the official documentation for additional background and advanced configurations.
+
+
+Clone the current repository:
+```bash
+git clone https://github.com/5gattacks/5g-sib8-alert.git ~/5g-sib8-alert
+```
 
 ### Core Network
 
@@ -57,11 +63,6 @@ Pull docker images
 ```
 cd ~/oai-cn5g
 docker compose pull
-```
-
-Clone the current repository:
-```bash
-git clone https://github.com/5gattacks/5g-sib8-alert.git ~/5g-sib8-alert
 ```
 
 ### gNB
@@ -127,14 +128,14 @@ docker compose down
 
 Start:
 ```bash
-cd ~/5g-sib8-alert/nms
+cd ~/5g-sib8-alert/
 ./start-nms.sh
 ```
 The web interface is accessible at http://localhost:3000/.
 
 Stop:
 ```bash
-cd ~/5g-sib8-alert/nms
+cd ~/5g-sib8-alert/
 ./stop-nms.sh
 ```
 **NOTE:** You should configure the parameters before running the gNB, except for sib8 parameters, as they can be modified at runtime.
