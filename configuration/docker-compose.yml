@@ -5,8 +5,8 @@ services:
     ports:
       - "3001:3001"
     volumes:
-      - ${HOME}/openairinterface5g/sib8.conf:/config/sib8.conf
-      - ${HOME}/openairinterface5g/targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf:/config/gnb.conf
+      - ${HOME}/sib8-spoofing/sib8.conf:/config/sib8.conf
+      - ${HOME}/sib8-spoofing/targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf:/config/gnb.conf
       - ${HOME}/oai-cn5g/conf/config.yaml:/config/cn.conf
     environment:
       - PLMN_CONFIG_PATH=/config/gnb.conf
