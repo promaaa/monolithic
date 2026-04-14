@@ -168,8 +168,7 @@ Press `Ctrl+C` to stop the gNB.
 
 The Cross Cell Verification patch is built the same way as the gNB patch. The only differences are:
 - use the CCV-compatible OpenAirInterface commit,
-- apply the CCV patch,
-- run the UE instead of the gNB.
+- apply the CCV patch.
 
 ```bash
 git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git ~/cross-cell-verification
