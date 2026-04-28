@@ -122,7 +122,10 @@ sudo ./build_oai -I
 cd ~/openairinterface5g/cmake_targets
 sudo ./build_oai -w USRP --ninja --gNB -C
 ```
-
+**Note**: you may need to install the following packages to build successfully:
+```
+sudo apt install libsqlite3-dev libblas-dev libopenblas-dev libhiredis-dev liblapacke-dev 
+```
 ### Run NMS and OAI
 
 #### CN
