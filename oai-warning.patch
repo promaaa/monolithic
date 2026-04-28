@@ -952,47 +952,41 @@ index 514416211f..8e05e0dc65 100644
  void rrc_gNB_process_f1_du_configuration_update(struct f1ap_gnb_du_configuration_update_s *conf_up, sctp_assoc_t assoc_id);
 diff --git a/sib8.conf b/sib8.conf
 new file mode 100644
-index 0000000000..48ef2f3ec5
+index 0000000000..c9b5b4c6a8
 --- /dev/null
 +++ b/sib8.conf
 @@ -0,0 +1,5 @@
 +messageIdentifier=1112;
 +serialNumber=FF00;
 +dataCodingScheme=48;
-+text=p1s1p1s1p1s1p1s1p1s1p1s1p1s1p1s1p1s1p1s1pp2s1p2s1p2s1p2s1p2s1p2s1p2s1p2s1p2s1p2s1pp3s1p3s1p3s1p3s1p3s1p3s1p3s1p3s1p3s1p3s1pp1s2p1s2p1s2p1s2p1s2p1s2p1s2p1s2p1s2p1s2pp2s2p2s2p2s2p2s2p2s2p2s2p2s2p2s2p2s2p2s2pp3s2p3s2p3s2p3s2p3s2p3s2p3s2p3s2p3s2p3s2pp1s3p1s3p1s3p1s3p1s3p1s3p1s3p1s3p1s3p1s3pp2s3p2s3p2s3p2s3p2s3p2s3p2s3p2s3p2s3p2s3pp3s3p3s3p3s3p3s3p3s3p3s3p3s3p3s3p3s3p3s3p;
++text=Hello this is a test warning message.;
 +mode=0;
 diff --git a/targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf b/targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf
-index 7f750d7259..216147baa3 100644
+index 7f750d7259..2bbc53ea22 100644
 --- a/targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf
 +++ b/targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf
-@@ -10,22 +10,23 @@ gNBs =
-     gNB_name  =  "gNB-OAI";
- 
-     // Tracking area code, 0x0000 and 0xfffe are reserved values
--    tracking_area_code  =  1;
-+    tracking_area_code  =  100;
-     plmn_list = ({ mcc = 001; mnc = 01; mnc_length = 2; snssaiList = ({ sst = 1; }) });
- 
-     nr_cellid = 12345678L;
+@@ -17,10 +17,10 @@ gNBs =
  
      ////////// Physical parameters:
  
 +
      do_CSIRS                                                  = 1;
      do_SRS                                                    = 1;
-+    # cu_sibs = [8];
  
 -    #uess_agg_levels = [0,1,2,2,1]
      servingCellConfigCommon = (
      {
   #spCellConfigCommon
- 
--      physCellId                                                    = 0;
-+      physCellId                                                    = 1;
- 
+@@ -30,7 +30,7 @@ gNBs =
  #  downlinkConfigCommon
      #frequencyInfoDL
-@@ -49,7 +50,7 @@ gNBs =
+       # this is 3600 MHz + 43 PRBs@30kHz SCS (same as initial BWP)
+-      absoluteFrequencySSB                                             = 641280;
++      absoluteFrequencySSB                                             = 641280; 
+       dl_frequencyBand                                                 = 78;
+       # this is 3600 MHz
+       dl_absoluteFrequencyPointA                                       = 640008;
+@@ -49,7 +49,7 @@ gNBs =
          initialDLBWPsubcarrierSpacing                                   = 1;
        #pdcch-ConfigCommon
          initialDLBWPcontrolResourceSetZero                              = 12;
@@ -1001,15 +995,7 @@ index 7f750d7259..216147baa3 100644
  
    #uplinkConfigCommon
       #frequencyInfoUL
-@@ -191,6 +192,7 @@ L1s = (
- RUs = (
- {
-   local_rf       = "yes"
-+  sdr_addrs = "serial=8002816"
-   nb_tx          = 1
-   nb_rx          = 1
-   att_tx         = 12;
-@@ -217,7 +219,7 @@ security = {
+@@ -217,7 +217,7 @@ security = {
    # preferred ciphering algorithms
    # the first one of the list that an UE supports in chosen
    # valid values: nea0, nea1, nea2, nea3
