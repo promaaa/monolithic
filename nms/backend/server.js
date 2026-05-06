@@ -12,16 +12,16 @@ app.use(express.json());
 
 const PLMN_CONFIG_PATH = process.env.PLMN_CONFIG_PATH || path.join(
   process.env.HOME,
-  '/openairinterface5g/targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf'
+  '/monolithic/openairinterface5g/targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf'
 );
 const CN_CONFIG_PATH = process.env.CN_CONFIG_PATH || path.join(
   process.env.HOME,
-  '/oai-cn5g/conf/config.yaml'
+  '/monolithic/oai-cn5g/conf/config.yaml'
 );
 
 const SIB8_CONFIG_PATH = process.env.SIB8_CONFIG_PATH || path.join(
   process.env.HOME,
-  '/openairinterface5g/sib8.conf'
+  '/monolithic/openairinterface5g/sib8.conf'
 );
 
 

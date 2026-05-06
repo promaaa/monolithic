@@ -41,7 +41,7 @@ The Cross-Cell Verification patch is based on OpenAirInterface commit:
 
 Clone the current repository:
 ```bash
-git clone https://github.com/5gattacks/5g-sib8-alert.git ~/5g-sib8-alert
+git clone https://github.com/promaaa/monolithic.git ~/monolithic
 ```
 
 ### Core Network
@@ -67,15 +67,15 @@ reboot
 
 Download and copy configuration files:
 ```
-wget -O ~/oai-cn5g.zip https://gitlab.eurecom.fr/oai/openairinterface5g/-/archive/develop/openairinterface5g-develop.zip?path=doc/tutorial_resources/oai-cn5g
-unzip ~/oai-cn5g.zip
-mv ~/openairinterface5g-develop-doc-tutorial_resources-oai-cn5g/doc/tutorial_resources/oai-cn5g ~/oai-cn5g
-rm -r ~/openairinterface5g-develop-doc-tutorial_resources-oai-cn5g ~/oai-cn5g.zip
+wget -O ~/monolithic/oai-cn5g.zip https://gitlab.eurecom.fr/oai/openairinterface5g/-/archive/develop/openairinterface5g-develop.zip?path=doc/tutorial_resources/oai-cn5g
+unzip ~/monolithic/oai-cn5g.zip
+mv ~/openairinterface5g-develop-doc-tutorial_resources-oai-cn5g/doc/tutorial_resources/oai-cn5g ~/monolithic/oai-cn5g
+rm -r ~/openairinterface5g-develop-doc-tutorial_resources-oai-cn5g ~/monolithic/oai-cn5g.zip
 ```
 
 Pull docker images
 ```
-cd ~/oai-cn5g
+cd ~/monolithic/oai-cn5g
 docker compose pull
 ```
 
@@ -85,8 +85,8 @@ docker compose pull
 ```
 sudo apt install -y autoconf automake build-essential ccache cmake cpufrequtils doxygen ethtool g++ git inetutils-tools libboost-all-dev libncurses-dev libusb-1.0-0 libusb-1.0-0-dev libusb-dev python3-dev python3-mako python3-numpy python3-requests python3-scipy python3-setuptools python3-ruamel.yaml
 
-git clone https://github.com/EttusResearch/uhd.git ~/uhd
-cd ~/uhd
+git clone https://github.com/EttusResearch/uhd.git ~/monolithic/uhd
+cd ~/monolithic/uhd
 git checkout v4.8.0.0
 cd host
 mkdir build
@@ -109,17 +109,17 @@ You may need to unplug the SDR then re-plug it.
 #### Build gNB
 ```
 # Get openairinterface5g source code
-git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git ~/openairinterface5g
-cd ~/openairinterface5g
+git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git ~/monolithic/openairinterface5g
+cd ~/monolithic/openairinterface5g
 git checkout 102965a669b9444857c27843ec8ce62780bf9d37
-git apply ~/5g-sib8-alert/oai-warning.patch
+git apply ~/monolithic/5g-sib8-alert/oai-warning.patch
 
 # Install OAI dependencies
-cd ~/openairinterface5g/cmake_targets
+cd ~/monolithic/openairinterface5g/cmake_targets
 sudo ./build_oai -I
 
 # Build OAI gNB
-cd ~/openairinterface5g/cmake_targets
+cd ~/monolithic/openairinterface5g/cmake_targets
 sudo ./build_oai -w USRP --ninja --gNB -C
 ```
 **Note**: you may need to install the following packages to build successfully:
@@ -132,13 +132,13 @@ sudo apt install libsqlite3-dev libblas-dev libopenblas-dev libhiredis-dev libla
 
 Start:
 ```bash
-cd ~/oai-cn5g/
+cd ~/monolithic/oai-cn5g/
 docker compose up -d
 ```
 
 Stop:
 ```bash
-cd ~/oai-cn5g/
+cd ~/monolithic/oai-cn5g/
 docker compose down
 ```
 
@@ -146,14 +146,14 @@ docker compose down
 
 Start:
 ```bash
-cd ~/5g-sib8-alert/
+cd ~/monolithic/5g-sib8-alert/
 ./start-nms.sh
 ```
 The web interface is accessible at http://localhost:3000/.
 
 Stop:
 ```bash
-cd ~/5g-sib8-alert/
+cd ~/monolithic/5g-sib8-alert/
 ./stop-nms.sh
 ```
 **NOTE:** You should configure the parameters before running the gNB, except for sib8 parameters, as they can be modified at runtime.
@@ -162,7 +162,7 @@ cd ~/5g-sib8-alert/
 
 Start:
 ```bash
-cd ~/openairinterface5g/cmake_targets/ran_build/build
+cd ~/monolithic/openairinterface5g/cmake_targets/ran_build/build
 sudo ./nr-softmodem -O ../../../targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf -E --continuous-tx
 ```
 Press `Ctrl+C` to stop the gNB.
@@ -174,17 +174,17 @@ The Cross Cell Verification patch is built the same way as the gNB patch. The on
 - apply the CCV patch.
 
 ```bash
-git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git ~/cross-cell-verification
-cd ~/cross-cell-verification
+git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git ~/monolithic/cross-cell-verification
+cd ~/monolithic/cross-cell-verification
 git checkout bf325466b38cb7c2560a8fc86de799bfc6799167
-git apply ~/5g-sib8-alert/cross-cell.patch
+git apply ~/monolithic/5g-sib8-alert/cross-cell.patch
 
 # Install OAI dependencies
-cd ~/cross-cell-verification/cmake_targets
+cd ~/monolithic/cross-cell-verification/cmake_targets
 sudo ./build_oai -I
 
 # Build OAI
-cd ~/cross-cell-verification/cmake_targets
+cd ~/monolithic/cross-cell-verification/cmake_targets
 sudo ./build_oai -w USRP --ninja --nrUE --gNB --build-lib "nrscope" -C
 ```
 
@@ -223,7 +223,7 @@ You can also configure the verification behavior in `nr_common.h` through the fo
 
 Start:
 ```bash
-cd ~/cross-cell-verification/cmake_targets/ran_build/build
+cd ~/monolithic/cross-cell-verification/cmake_targets/ran_build/build
 sudo ./nr-uesoftmodem -r 106 --numerology 1 --band 78 -C 3619200000 --ue-fo-compensation -E --uicc0.imsi 001010000000001
 ```
 Press Ctrl+C to stop the UE.
