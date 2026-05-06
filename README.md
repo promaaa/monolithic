@@ -1,13 +1,13 @@
 # 5G SIB8 Warning Transmission and Cross-Cell Verification
 
-This repository contains a Network Management System (NMS) and patch files that extend the OpenAirInterface project to support:
+This repository contains patch files that extend the OpenAirInterface project to support:
 - SIB8 emergency alert transmission from the gNB side,
 - Cross Cell Verification (CCV) from the UE side.
 
-The SIB8 warning transmission patch is based on OpenAirInterface commit:
+The SIB8 warning transmission patch (`oai-warning.patch`) is based on OpenAirInterface commit:
 `102965a669b9444857c27843ec8ce62780bf9d37`
 
-The Cross-Cell Verification patch is based on OpenAirInterface commit:
+The Cross-Cell Verification patch (`cross-cell.patch`) is based on OpenAirInterface commit:
 `bf325466b38cb7c2560a8fc86de799bfc6799167`
 
 
@@ -25,11 +25,6 @@ The Cross-Cell Verification patch is based on OpenAirInterface commit:
 - Configurable verification behavior.
 - Return to the original carrier configuration after verification,
 - Exclusion of the original cell based on its PCI (Physical Cell Identity) if the warning is not verified.
-
-### The NMS allows users to:
-- Modify SIB8 warning message parameters, including the transmission mode.
-- Configure key gNB parameters (e.g. PLMN, cell identity..).
-- Manage basic subscriber data in the core network.
 
 ## Tutorial
 
@@ -112,7 +107,7 @@ You may need to unplug the SDR then re-plug it.
 git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git ~/monolithic/openairinterface5g
 cd ~/monolithic/openairinterface5g
 git checkout 102965a669b9444857c27843ec8ce62780bf9d37
-git apply ~/monolithic/5g-sib8-alert/oai-warning.patch
+git apply ~/monolithic/oai-warning.patch
 
 # Install OAI dependencies
 cd ~/monolithic/openairinterface5g/cmake_targets
@@ -126,7 +121,7 @@ sudo ./build_oai -w USRP --ninja --gNB -C
 ```
 sudo apt install libsqlite3-dev libblas-dev libopenblas-dev libhiredis-dev liblapacke-dev 
 ```
-### Run NMS and OAI
+### Run Core Network and OAI
 
 #### CN
 
@@ -142,20 +137,6 @@ cd ~/monolithic/oai-cn5g/
 docker compose down
 ```
 
-#### NMS
-
-Start:
-```bash
-cd ~/monolithic/5g-sib8-alert/
-./start-nms.sh
-```
-The web interface is accessible at http://localhost:3000/.
-
-Stop:
-```bash
-cd ~/monolithic/5g-sib8-alert/
-./stop-nms.sh
-```
 **NOTE:** You should configure the parameters before running the gNB, except for sib8 parameters, as they can be modified at runtime.
 
 #### gNB:
@@ -177,7 +158,7 @@ The Cross Cell Verification patch is built the same way as the gNB patch. The on
 git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git ~/monolithic/cross-cell-verification
 cd ~/monolithic/cross-cell-verification
 git checkout bf325466b38cb7c2560a8fc86de799bfc6799167
-git apply ~/monolithic/5g-sib8-alert/cross-cell.patch
+git apply ~/monolithic/cross-cell.patch
 
 # Install OAI dependencies
 cd ~/monolithic/cross-cell-verification/cmake_targets
