@@ -1,0 +1,16 @@
+{
+  "name": "5g-tui",
+  "version": "1.0.0",
+  "description": "5G Network Terminal UI for managing the monolithic 5G network",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "start:generic": "node src/generic-tui.js",
+    "verify": "node tests/verify-system.js",
+    "test": "node tests/verify-system.js"
+  },
+  "dependencies": {
+    "inquirer": "^9.2.12"
+  }
+}

@@ -215,3 +215,64 @@ Press Ctrl+C to stop the UE.
 > This behavior is not part of the Cross-Cell Verification logic itself. It is a practical workaround related to SDR retuning limitations observed during frequency switching.
 >
 > As a result, users may see repeated logs related to sleep or restart behavior while the UE scans neighboring carriers.
+
+## 5G Network TUI
+
+A Terminal User Interface (TUI) is provided to conveniently manage the 5G network infrastructure. It supports starting/stopping the core network and gNB, checking status, and modifying emergency messages.
+
+### Prerequisites
+
+- Node.js 18+ and npm
+- `sshpass` (for password-based SSH)
+- macOS (uses `dscacheutil` for hostname resolution)
+
+### Installation
+
+```bash
+cd ~/monolithic/5g-tui
+npm install
+```
+
+### Usage
+
+#### Generic TUI (recommended for custom setups)
+
+The generic TUI supports configurable SSH connections to any 5G network machine:
+
+```bash
+npm run start:generic
+```
+
+On first launch, you'll be guided through setting up:
+1. Network mode (Monolithic)
+2. Core machine SSH credentials (host, username, password)
+3. Core and RAN paths
+4. gNB configuration file
+5. PLMN and UE IMSI
+
+Your configuration is saved securely in `~/.5g-tui/config.json`.
+
+#### Available Actions
+
+- **Start Network** - Full startup sequence (USRP reset → Core containers → gNB)
+- **Stop Network** - Stop gNB and core containers
+- **Restart Network** - Stop and restart all services
+- **Check Status** - View container and gNB status
+- **Change Emergency Message** - Update SIB8 warning text and optionally restart gNB
+- **Edit Configuration** - Modify saved settings
+
+#### System Verification
+
+Run the verification script to check connectivity to remote hosts:
+
+```bash
+npm run verify
+```
+
+This checks:
+- Hostname resolution for serber-firecell and serber-minipc
+- SSH connectivity
+- Presence of nr-softmodem binary and docker-compose.yaml
+- Docker container status
+- USRP device detection
+- gNB process status
